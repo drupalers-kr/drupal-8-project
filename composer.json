@@ -1,0 +1,76 @@
+{
+  "name": "{{org}}/{{codename}}",
+  "description": "Project template for Drupal 8 sites that adhere to 12 factor app guidelines.",
+  "type": "project",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "php": "~7",
+    "ext-gd": "*",
+    "composer/installers": "^1.0.20",
+    "drupal-composer/drupal-scaffold": "dev-master",
+    "drupal-composer/drupal-security-advisories": "8.0.x-dev",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "~8.0",
+    "drush/drush": "~8.0",
+    "drupal/console": "~1.0.0",
+    "vlucas/phpdotenv": "^2.3",
+    // "drupal/flysystem": "~1.0.0-alpha4",
+    // "drupal/flysystem_s3": "~1.0.0-alpha2",
+    // "drupal/bootstrap": "~3.0" || "drupal/radix": "~3.0"
+  },
+  "require-dev": {
+    "drupal/console_logger": "1.x-dev",
+    "drupal/devel": "1.x-dev",
+    "drupal/stage_file_proxy": "1.x-dev"
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  },
+  "scripts": {
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "post-install-cmd": [
+      "Shomeya\\composer\\ScriptHandler::buildScaffold",
+      "Shomeya\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "post-update-cmd": [
+      "Shomeya\\composer\\ScriptHandler::buildScaffold",
+      "Shomeya\\composer\\ScriptHandler::createRequiredFiles"
+    ]
+  },
+  "config": {
+    "bin-dir": "bin/"
+  },
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "web/core": [
+        "drupal/core"
+      ],
+      "web/modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "web/profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "web/themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ],
+      "drush/contrib/{$name}": [
+        "type:drupal-drush"
+      ]
+    },
+    "enable-patching": true
+  }
+}
